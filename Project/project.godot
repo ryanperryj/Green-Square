@@ -16,7 +16,15 @@ _global_script_class_icons={
 [application]
 
 config/name="Project"
+run/main_scene="res://World/World.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=256
+window/size/height=144
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [rendering]
 
