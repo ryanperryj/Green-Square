@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Alpha.wav-be7c96632f5ab0dcc63fc50e47c311c9.sample"
+
+[deps]
+
+source_file="res://Music/Alpha.wav"
+dest_files=[ "res://.import/Alpha.wav-be7c96632f5ab0dcc63fc50e47c311c9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
