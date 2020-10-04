@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DungeonTileset.png-06dee44510b9cf075b9b54788bade899.stex"
+path="res://.import/WallTileset.png-e60fbaab75e243c1632da152272a695a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/DungeonTileset.png"
-dest_files=[ "res://.import/DungeonTileset.png-06dee44510b9cf075b9b54788bade899.stex" ]
+source_file="res://World/WallTileset.png"
+dest_files=[ "res://.import/WallTileset.png-e60fbaab75e243c1632da152272a695a.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
