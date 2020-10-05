@@ -1,17 +1,23 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Items/Sword.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Hand.png" type="Texture" id=4]
+[ext_resource path="res://Particles/GreenSwordSlash.png" type="Texture" id=5]
+[ext_resource path="res://HitandHurt/Hitbox.tscn" type="PackedScene" id=6]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3.05486, 3.0651 )
+[sub_resource type="CapsuleShape2D" id=1]
+height = 17.5861
 
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 3, 3 )
+
+[sub_resource type="Animation" id=3]
 length = 0.1
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("RightHand:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -19,16 +25,39 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
+"update": 0,
+"values": [ Vector2( 5, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LeftHand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -5, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RightHand:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Run"
+[sub_resource type="Animation" id=4]
 length = 0.4
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("RightHand:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -36,49 +65,190 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 1, 2, 3, 4 ]
+"update": 0,
+"values": [ Vector2( 5, -1 ), Vector2( 5, 0 ), Vector2( 5, 1 ), Vector2( 5, -1.19209e-07 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LeftHand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -5, 1 ), Vector2( -5, 0 ), Vector2( -5, -1 ), Vector2( -5, 1.19209e-07 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RightHand:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="Animation" id=5]
+resource_name = "SwordAttack"
+length = 0.125
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("RightHand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.025, 0.05, 0.075, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 9, 1 ), Vector2( 9, -9 ), Vector2( 0, -12 ), Vector2( -9, -9 ), Vector2( -12, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("RightHand:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.025, 0.05, 0.075, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 60.0, 15.0, -30.0, -75.0, -120.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LeftHand:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.025, 0.05, 0.075, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -8, -1 ), Vector2( -6, 6 ), Vector2( 0, 8 ), Vector2( 6, 6 ), Vector2( 8, -1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SwordParticleSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.025, 0.075 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.125 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("SwordHitbox/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "Run"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "SwordAttack"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
 
-[sub_resource type="AnimationNodeStateMachine" id=8]
-states/Idle/node = SubResource( 4 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachine" id=13]
+states/Idle/node = SubResource( 6 )
 states/Idle/position = Vector2( 261, 105 )
-states/Run/node = SubResource( 5 )
+states/Run/node = SubResource( 7 )
 states/Run/position = Vector2( 461, 105 )
-transitions = [ "Idle", "Run", SubResource( 6 ), "Run", "Idle", SubResource( 7 ) ]
+states/SwordAttack/node = SubResource( 8 )
+states/SwordAttack/position = Vector2( 367, 202 )
+transitions = [ "Idle", "Run", SubResource( 9 ), "Run", "Idle", SubResource( 10 ), "SwordAttack", "Idle", SubResource( 11 ), "Idle", "SwordAttack", SubResource( 12 ) ]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="RightHand" type="Node2D" parent="."]
+position = Vector2( 5, 0 )
+scale = Vector2( 1.00845, 0.978662 )
+
+[node name="Sword" parent="RightHand" instance=ExtResource( 3 )]
+position = Vector2( 2, -4 )
+rotation = 0.523599
+
+[node name="Sprite" type="Sprite" parent="RightHand"]
+texture = ExtResource( 4 )
+
+[node name="LeftHand" type="Node2D" parent="."]
+position = Vector2( -5, 0 )
+
+[node name="Sprite" type="Sprite" parent="LeftHand"]
+texture = ExtResource( 4 )
+
+[node name="SwordHitbox" parent="." instance=ExtResource( 6 )]
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="SwordHitbox" index="0"]
+position = Vector2( 0, -10 )
+rotation = 1.5708
+scale = Vector2( 1.25577, 1.28069 )
+shape = SubResource( 1 )
+
+[node name="SwordParticleSprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 5 )
+
+[node name="BodySprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0262051, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 2 )
-anims/Run = SubResource( 3 )
+anims/Idle = SubResource( 3 )
+anims/Run = SubResource( 4 )
+anims/SwordAttack = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 8 )
+tree_root = SubResource( 13 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 9 )
+parameters/playback = SubResource( 14 )
+
+[editable path="SwordHitbox"]
