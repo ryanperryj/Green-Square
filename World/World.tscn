@@ -1,6 +1,7 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=57 format=2]
 
-[ext_resource path="res://Music/Alpha.wav" type="AudioStream" id=2]
+[ext_resource path="res://Music/Beta.wav" type="AudioStream" id=1]
+[ext_resource path="res://Enemies/RedEnemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/WallTileset.png" type="Texture" id=4]
 [ext_resource path="res://World/World.gd" type="Script" id=5]
@@ -467,12 +468,12 @@ current = true
 smoothing_enabled = true
 smoothing_speed = 7.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
 autoplay = true
 
 [node name="FloorSprite" type="Sprite" parent="."]
-position = Vector2( 0.540405, 0.540344 )
+position = Vector2( 1.19209e-07, 1.19209e-07 )
 scale = Vector2( 10, 5 )
 texture = ExtResource( 6 )
 centered = false
@@ -494,7 +495,15 @@ position = Vector2( 420, 580 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160, 500 )
-scale = Vector2( 5, 5 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
+
+[node name="RedEnemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 560, 120 )
+
+[node name="RedEnemy2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1680, 200 )
+
+[node name="RedEnemy3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1680, 520 )

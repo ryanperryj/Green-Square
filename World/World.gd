@@ -1,6 +1,7 @@
 extends Node2D
 
-onready var audioStreamPlayer = $AudioStreamPlayer
-
-func _ready():
-	pass
+func _process(delta):
+	if Input.is_action_just_pressed("reload"):
+		get_tree().reload_current_scene()
+	if Input.is_action_just_pressed("close"):
+		get_tree().quit()

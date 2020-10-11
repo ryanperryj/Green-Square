@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -6,14 +6,19 @@
 [ext_resource path="res://Player/Hand.png" type="Texture" id=4]
 [ext_resource path="res://Particles/GreenSwordSlash.png" type="Texture" id=5]
 [ext_resource path="res://HitandHurt/Hitbox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://HitandHurt/Hurtbox.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Stats/Stats.tscn" type="PackedScene" id=8]
 
-[sub_resource type="CapsuleShape2D" id=1]
-height = 17.5861
-
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3, 3 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="CapsuleShape2D" id=2]
+height = 17.5861
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 3, 3 )
+
+[sub_resource type="Animation" id=4]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -53,7 +58,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -93,8 +98,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "SwordAttack"
+[sub_resource type="Animation" id=6]
 length = 0.125
 step = 0.025
 tracks/0/type = "value"
@@ -172,16 +176,14 @@ tracks/5/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Run"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "SwordAttack"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=9]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=10]
 
@@ -189,22 +191,30 @@ animation = "SwordAttack"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=12]
 
-[sub_resource type="AnimationNodeStateMachine" id=13]
-states/Idle/node = SubResource( 6 )
-states/Idle/position = Vector2( 261, 105 )
-states/Run/node = SubResource( 7 )
-states/Run/position = Vector2( 461, 105 )
-states/SwordAttack/node = SubResource( 8 )
-states/SwordAttack/position = Vector2( 367, 202 )
-transitions = [ "Idle", "Run", SubResource( 9 ), "Run", "Idle", SubResource( 10 ), "SwordAttack", "Idle", SubResource( 11 ), "Idle", "SwordAttack", SubResource( 12 ) ]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
+[sub_resource type="AnimationNodeStateMachine" id=14]
+states/Idle/node = SubResource( 7 )
+states/Idle/position = Vector2( 261, 105 )
+states/Run/node = SubResource( 8 )
+states/Run/position = Vector2( 461, 105 )
+states/SwordAttack/node = SubResource( 9 )
+states/SwordAttack/position = Vector2( 367, 202 )
+transitions = [ "Idle", "Run", SubResource( 10 ), "Run", "Idle", SubResource( 11 ), "SwordAttack", "Idle", SubResource( 12 ), "Idle", "SwordAttack", SubResource( 13 ) ]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=15]
 
 [node name="Player" type="KinematicBody2D"]
+scale = Vector2( 5, 5 )
+collision_layer = 2
 script = ExtResource( 2 )
 
+[node name="Stats" parent="." instance=ExtResource( 8 )]
+max_health = 3
+
 [node name="RightHand" type="Node2D" parent="."]
-position = Vector2( 5, 0 )
+position = Vector2( 9, 1 )
+rotation = 1.0472
 scale = Vector2( 1.00845, 0.978662 )
 
 [node name="Sword" parent="RightHand" instance=ExtResource( 3 )]
@@ -215,10 +225,16 @@ rotation = 0.523599
 texture = ExtResource( 4 )
 
 [node name="LeftHand" type="Node2D" parent="."]
-position = Vector2( -5, 0 )
+position = Vector2( -8, -1 )
 
 [node name="Sprite" type="Sprite" parent="LeftHand"]
 texture = ExtResource( 4 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 7 )]
+collision_layer = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource( 1 )
 
 [node name="SwordHitbox" parent="." instance=ExtResource( 6 )]
 collision_mask = 8
@@ -227,7 +243,7 @@ collision_mask = 8
 position = Vector2( 0, -10 )
 rotation = 1.5708
 scale = Vector2( 1.25577, 1.28069 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="SwordParticleSprite" type="Sprite" parent="."]
 visible = false
@@ -238,17 +254,21 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0262051, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 3 )
-anims/Run = SubResource( 4 )
-anims/SwordAttack = SubResource( 5 )
+anims/Idle = SubResource( 4 )
+anims/Run = SubResource( 5 )
+anims/SwordAttack = SubResource( 6 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 13 )
+tree_root = SubResource( 14 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 14 )
+parameters/playback = SubResource( 15 )
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Hurtbox"]
 
 [editable path="SwordHitbox"]
