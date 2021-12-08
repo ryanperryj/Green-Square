@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Music/Beta.wav" type="AudioStream" id=1]
 [ext_resource path="res://Enemies/RedEnemy.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://World/floor.png" type="Texture" id=6]
 [ext_resource path="res://Objects/LargeCrate.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/Crate.tscn" type="PackedScene" id=8]
+[ext_resource path="res://icon.png" type="Texture" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -458,6 +459,20 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 } ]
 0/z_index = 0
 
+[sub_resource type="Shader" id=49]
+code = "shader_type canvas_item;
+
+uniform float blue = 1.0;
+
+void fragment(){
+	COLOR = texture(TEXTURE, UV);
+	COLOR.b = blue;
+}"
+
+[sub_resource type="ShaderMaterial" id=50]
+shader = SubResource( 49 )
+shader_param/blue = 1.0
+
 [node name="World" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -507,3 +522,9 @@ position = Vector2( 1680, 200 )
 
 [node name="RedEnemy3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1680, 520 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 50 )
+position = Vector2( 156.023, 120.231 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 9 )
